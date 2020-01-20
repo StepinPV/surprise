@@ -1,0 +1,53 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.message-list-container {
+    padding: 10px 10px 70px;
+    flex-grow: 1;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+
+    background-color: white;
+    border-bottom: 1px solid #eeeef1;
+
+    position: sticky;
+    top: 0;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    justify-content: center;
+    padding: 16px;
+}
+
+@supports (backdrop-filter: blur(20px)) {
+    .header {
+        border: none;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+    }
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+     backdrop-filter: blur(20px);
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.input {
+    flex-grow: 1;
+    margin-right: 8px;
+}
