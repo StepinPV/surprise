@@ -154,7 +154,7 @@ function Messenger({ data, sendMessage }) {
                                 }} />
                             <Fab size="small" color="primary">
                                 <Icon onClick={() => {
-                                    if (inputValue === message.answer.value) {
+                                    if (inputValue.toLowerCase() === message.answer.value.toLowerCase()) {
                                         sendMessage(message.answer.value);
                                     } else {
                                         alert('Пароль не верный');

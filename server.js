@@ -116,7 +116,7 @@ const steps = [{
     message: 'В букете, который я тебе отправил, был листочек с паролем'
 }, {
     type: 'question',
-    message: 'Введи его и узнаешь кто я)',
+    message: 'Введи его, что мы могли продолжить дальше',
     answer: {
         type : 'password',
         placeholder: 'Пароль',
