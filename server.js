@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const errorhandler = require('errorhandler');
 const nodemailer = require('./nodemailer');
@@ -204,6 +205,12 @@ app.set('port', PORT);
 
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.get('/api/load-data', (req, res, next) => {
     try {
