@@ -85,7 +85,7 @@ const steps = [{
 }, {
     log: 'Открытие сайта. День 2',
     type: 'question',
-    time: new Date(2020, 0, 22, 21, 0, 0).getTime(),
+    time: '1579716000000',
     message: 'Привет! Соскучилась?)',
     answer: {
         type : 'variants',
@@ -135,7 +135,7 @@ const steps = [{
 }, {
     log: 'Открытие сайта. День 3',
     type: 'question',
-    time: new Date(2020, 0, 23, 22, 0, 0).getTime(),
+    time: '1579806000000',
     message: 'Привет, Насть) Ну что же, как я и обещал я приготовил для тебя еще один подарок.'
 }, {
     type: 'question',
