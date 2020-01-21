@@ -84,7 +84,7 @@ const steps = [{
 }, {
     log: 'Открытие сайта. День 2',
     type: 'question',
-    time: new Date(2020, 0, 20, 16, 0, 0).getTime(),
+    time: new Date(2020, 0, 22, 21, 0, 0).getTime(),
     message: 'Привет! Соскучилась?)',
     answer: {
         type : 'variants',
@@ -134,11 +134,10 @@ const steps = [{
 }, {
     log: 'Открытие сайта. День 3',
     type: 'question',
-    time: new Date(2020, 0, 20, 16, 0, 0).getTime(),
+    time: new Date(2020, 0, 23, 22, 0, 0).getTime(),
     message: 'Привет, Насть) Ну что же, как я и обещал я приготовил для тебя еще один подарок.'
 }, {
     type: 'question',
-    time: new Date(2020, 0, 20, 16, 0, 0).getTime(),
     message: 'Зайди в нашу комнату и выключи свет. Не спрашивай зачем, так нужно)',
     answer: {
         type : 'variants',
@@ -199,7 +198,7 @@ const data = {
 };
 
 const app = express();
-const PORT = 4000;
+const PORT = 80;
 
 app.set('port', PORT);
 
