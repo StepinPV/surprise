@@ -9,7 +9,7 @@ const getImage = () => {
         switch(window.location.host){
             case 'xn------7cdbghkzjfdotwjwcbcubmilgu73aib.xn--p1ai': return img1;
             case 'xn------ddddkjcaljblou5brcsbidh6w9b8a.xn--p1ai': return img2;
-            default: return img1;
+            default: return img2;
         }
     }
 

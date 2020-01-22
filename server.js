@@ -9,12 +9,15 @@ const punycode = require('punycode');
 const files = {
     'сюрприз-для-насти-абросимовой': {
         steps: '1-steps.json',
-        data: '1-data.json',
-        name: 'Настя Абросимова'
+        data: '1-data.json'
+    },
+    'сюрприз-для-веры-березиной': {
+        steps: '2-steps.json',
+        data: '2-data.json'
     },
     default: {
-        steps: '1-steps.json',
-        data: '1-data.json'
+        steps: '2-steps.json',
+        data: '2-data.json'
     }
 };
 
