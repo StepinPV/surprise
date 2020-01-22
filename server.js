@@ -41,17 +41,17 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
 const getSteps = (key) => {
-    const paths = files[key] || file['default'];
+    const paths = files[key] || files['default'];
     return JSON.parse(fs.readFileSync(paths['steps']));
 };
 
 const getData = (key) => {
-    const paths = files[key] || file['default'];
+    const paths = files[key] || files['default'];
     return JSON.parse(fs.readFileSync(paths['data']));
 };
 
 const setData = (key, data) => {
-    const paths = files[key] || file['default'];
+    const paths = files[key] || files['default'];
     return fs.writeFileSync(paths['data'], JSON.stringify(data));
 };
 
@@ -65,6 +65,8 @@ const decodeHost = (host) => {
 
 const getStepsAndData = (host) => {
     const decodedHost = decodeHost(host);
+
+    console.log(decodedHost);
 
     return {
         steps: getSteps(decodedHost),
