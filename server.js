@@ -57,7 +57,7 @@ const setData = (key, data) => {
 
 const decodeHost = (host) => {
     try {
-        return punycode.decode(host);
+        return punycode.decode(host.replace('xn--', '').split('.')[0]);
     } catch(err) {
         return 'default';
     }
