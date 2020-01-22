@@ -31,7 +31,7 @@ const defaultData = {
 };
 
 const app = express();
-const PORT = 112;
+const PORT = 80;
 
 app.set('port', PORT);
 
