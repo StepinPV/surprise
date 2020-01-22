@@ -23,12 +23,12 @@ module.exports.init = (host, port, login, password) => {
 };
 
 module.exports.send = (text) => {
-    transporter.sendMail({
+    /*transporter.sendMail({
         from: 'stepinpv@yandex.ru',
         to: 'stepinpv@yandex.ru',
         subject: 'Сюрприз квест',
         text
-    });
+    });*/
 
     console.log(`Сообщение: "${text}" отправлено`);
 };

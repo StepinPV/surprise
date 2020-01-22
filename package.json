@@ -7,7 +7,9 @@
     "axios": "^0.19.1",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "nodemailer": "^6.4.2",
+    "punycode": "^2.1.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.0"

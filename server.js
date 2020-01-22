@@ -3,203 +3,32 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const errorhandler = require('errorhandler');
 const nodemailer = require('./nodemailer');
+const fs = require('fs');
+const punycode = require('punycode');
 
-const steps = [{
-    log: 'Открытие сайта. День 1',
-    type: 'question',
-    message: 'Джэк, привет! Это твой любимый парень. Я хочу сделать для тебя сюрприз.'
-}, {
-    type: 'question',
-    message: 'Не пугайся. Это не спам.',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Привет!'
-        }]
+const files = {
+    'сюрприз-для-насти-абросимовой': {
+        steps: '1-steps.json',
+        data: '1-data.json',
+        name: 'Настя Абросимова'
+    },
+    default: {
+        steps: '1-steps.json',
+        data: '1-data.json'
     }
-}, {
-    type: 'question',
-    message: 'Чтобы ты поверила, что это действительно я, расскажу несколько фактов о тебе:'
-}, {
-    type: 'question',
-    message: '1. 2 февраля ты летишь во Францию. Верно?',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Верно'
-        }]
-    }
-}, {
-    type: 'question',
-    message: '2. Ты работаешь в mail.ru маркетологом. Я прав?',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Да'
-        }]
-    }
-}, {
-    type: 'question',
-    message: '3. У тебя есть молодой человек, которого зовут Ваня.',
-    answers: [{
-        message: 'Верно'
-    }],
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Верно'
-        }]
-    }
-}, {
-    type: 'question',
-    message: '4. Иногда ты играешь в настольные игры с друзьями.',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Иногда играю в покер'
-        }]
-    }
-}, {
-    type: 'question',
-    message: 'Думаю достаточно. Я знаю много другого о тебе, но не будем терять время...'
-}, {
-    type: 'question',
-    message: 'Заинтриговал тебя?',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Да!'
-        }]
-    }
-}, {
-    log: 'Сценарий выполнен. 1 день.',
-    type: 'question',
-    message: 'Отлично. В течение завтрашнего дня, ты получишь подсказку, которая поможет пройти квест дальше. А вечером я буду ждать тебя здесь в 21 час. Договорились?:)',
-    answer: {
-        type : 'variants',
+};
 
-        value: [{
-            message: 'Конечно'
-        }]
+const defaultData = {
+    "activeStep": 0,
+    "stepsData": {},
+    "timestamps": {
+        "bot": {},
+        "human": {}
     }
-}, {
-    log: 'Открытие сайта. День 2',
-    type: 'question',
-    time: '1579716000000',
-    message: 'Привет! Соскучилась?)',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Привет)'
-        }]
-    }
-}, {
-    type: 'question',
-    message: 'Спасибо, что делаешь все так, как я говорю.'
-}, {
-    type: 'question',
-    message: 'Как я и обещал, сегодня мы продолжим...'
-}, {
-    type: 'question',
-    message: 'Ты получила букет от меня?',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Да'
-        }]
-    }
-}, {
-    type: 'question',
-    message: 'Надеюсь, что он тебе понравился и мне удалось немного тебя порадовать.'
-}, {
-    type: 'question',
-    message: 'В букете, который я тебе отправил, был листочек с паролем'
-}, {
-    type: 'question',
-    message: 'Введи его, что мы могли продолжить дальше',
-    answer: {
-        type : 'password',
-        placeholder: 'Пароль',
-        value: 'ВНЛ'
-    }
-}, {
-    log: 'Сценарий выполнен. 2 день.',
-    type: 'question',
-    message: 'Я решил сделать мини-квест, чтобы мы немного повеселились. Но это еще, конечно же, не все. Зайди сюда завтра в 22:00. Я подготовил для тебя еще кое-что. И обязательно будь в это время дома.',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Хорошо)'
-        }]
-    }
-}, {
-    log: 'Открытие сайта. День 3',
-    type: 'question',
-    time: '1579806000000',
-    message: 'Привет, Насть) Ну что же, как я и обещал я приготовил для тебя еще один подарок.'
-}, {
-    type: 'question',
-    message: 'Зайди в нашу комнату и выключи свет. Не спрашивай зачем, так нужно)',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Выключила'
-        }]
-    }
-}, {
-    type: 'question',
-    message: 'Теперь выйди на балкон',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Вышла'
-        }]
-    }
-}, {
-    log: 'Вышла на балкон',
-    type: 'question',
-    message: 'Ты готова?)',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Да'
-        }]
-    }
-}, {
-    log: 'Приготовиться запускать салют',
-    type: 'question',
-    message: 'Точно?',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Да!'
-        }]
-    }
-}, {
-    type: 'question',
-    message: 'Ожидай минуту.',
-    answer: {
-        type : 'variants',
-        value: [{
-            message: 'Хорошо)'
-        }]
-    }
-}, {
-    log: 'Запуск',
-    type: 'finish'
-}];
-
-const data = {
-  activeStep: 0,
-  stepsData: {},
-  timestamps: {
-      bot: {},
-      human: {}
-  }
 };
 
 const app = express();
-const PORT = 80;
+const PORT = 112;
 
 app.set('port', PORT);
 
@@ -208,13 +37,60 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'build')));
 
+const getSteps = (key) => {
+    const paths = files[key] || file['default'];
+    return JSON.parse(fs.readFileSync(paths['steps']));
+};
+
+const getData = (key) => {
+    const paths = files[key] || file['default'];
+    return JSON.parse(fs.readFileSync(paths['data']));
+};
+
+const setData = (key, data) => {
+    const paths = files[key] || file['default'];
+    return fs.writeFileSync(paths['data'], JSON.stringify(data));
+};
+
+const decodeHost = (host) => {
+    try {
+        return punycode.decode(host);
+    } catch(err) {
+        return 'default';
+    }
+};
+
+const getStepsAndData = (host) => {
+    const decodedHost = decodeHost(host);
+
+    return {
+        steps: getSteps(decodedHost),
+        data: getData(decodedHost),
+        host: decodedHost
+    };
+};
+
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+app.get('/reset', (req, res, next) => {
+    try {
+        const decodedHost = decodeHost(req.header('host'));
+
+        setData(decodedHost, defaultData);
+        res.write('OK');
+        res.end();
+    } catch(err) {
+        next(err);
+    }
+});
+
 app.get('/api/load-data', (req, res, next) => {
     try {
-        nodemailer.send('Открытие сайта');
+        const { steps, data, host } = getStepsAndData(req.header('host'));
+
+        nodemailer.send(`Открытие сайта ${host}`);
         res.json({ steps, data });
         res.end();
     } catch(err) {
@@ -222,7 +98,7 @@ app.get('/api/load-data', (req, res, next) => {
     }
 });
 
-const checkLog = (index) => {
+const checkLog = (index, steps) => {
     if (steps[index].log) {
         nodemailer.send(steps[index].log);
     }
@@ -230,8 +106,10 @@ const checkLog = (index) => {
 
 app.get('/api/send-message', (req, res, next) => {
     try {
+        const { steps, data, host } = getStepsAndData(req.header('host'));
+
         let stepIndex = data.activeStep;
-        checkLog(stepIndex);
+        checkLog(stepIndex, steps);
 
         data.timestamps.bot[stepIndex] = req.query.timestamp;
 
@@ -239,7 +117,7 @@ app.get('/api/send-message', (req, res, next) => {
             stepIndex++;
 
             data.timestamps.bot[stepIndex] = req.query.timestamp;
-            checkLog(stepIndex);
+            checkLog(stepIndex, steps);
         }
 
         data.stepsData[stepIndex] = {
@@ -249,7 +127,9 @@ app.get('/api/send-message', (req, res, next) => {
 
         data.activeStep = stepIndex + 1;
 
-        checkLog(data.activeStep);
+        checkLog(data.activeStep, steps);
+
+        setData(host, data);
 
         res.json({ steps, data });
         res.end();

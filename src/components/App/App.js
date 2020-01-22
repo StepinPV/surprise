@@ -17,6 +17,18 @@ const theme = createMuiTheme({
     },
 });
 
+const getName = () => {
+    if (window) {
+        switch(window.location.host){
+            case 'xn------7cdbghkzjfdotwjwcbcubmilgu73aib.xn--p1ai': return 'Настя';
+            case 'xn------ddddkjcaljblou5brcsbidh6w9b8a.xn--p1ai': return 'Вера';
+            default: return 'Настя';
+        }
+    }
+
+    return 'Настя';
+};
+
 function App() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -57,7 +69,7 @@ function App() {
 
     const renderPage = () => {
         if (loading || fixedLoading) {
-            return <Loader message='Я рад тебя здесь видеть, Настя!' />;
+            return <Loader message={`Я рад тебя здесь видеть, ${getName()}!`} />;
         }
 
         const activeStep = data.steps[data.data.activeStep];
@@ -67,7 +79,7 @@ function App() {
                 if (activeStep.time && activeStep.time > (new Date()).getTime()) {
                     const targetDate = new Date(parseInt(activeStep.time));
                     return <Loader hasProgress={false} message={
-                        `Настя, я жду тебя здесь
+                        `${getName()}, я жду тебя здесь
                         ${targetDate.toLocaleString('ru', { day: 'numeric', month: 'long' })}
                         в ${targetDate.toLocaleString('ru', { hour: 'numeric', minute: 'numeric' })} :)`} />
                 }
