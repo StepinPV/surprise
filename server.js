@@ -96,7 +96,7 @@ app.get('/api/load-data', (req, res, next) => {
     try {
         const { steps, data, host } = getStepsAndData(req.header('host'));
 
-        nodemailer.send(`Открытие сайта ${host}`);
+        nodemailer.send(`${host}: открытие сайта`);
         res.json({ steps, data });
         res.end();
     } catch(err) {
@@ -104,9 +104,9 @@ app.get('/api/load-data', (req, res, next) => {
     }
 });
 
-const checkLog = (index, steps) => {
+const checkLog = (index, steps, host) => {
     if (steps[index].log) {
-        nodemailer.send(steps[index].log);
+        nodemailer.send(`${host}: ${steps[index].log}`);
     }
 };
 
@@ -115,7 +115,7 @@ app.get('/api/send-message', (req, res, next) => {
         const { steps, data, host } = getStepsAndData(req.header('host'));
 
         let stepIndex = data.activeStep;
-        checkLog(stepIndex, steps);
+        checkLog(stepIndex, steps, host);
 
         data.timestamps.bot[stepIndex] = req.query.timestamp;
 
@@ -123,7 +123,7 @@ app.get('/api/send-message', (req, res, next) => {
             stepIndex++;
 
             data.timestamps.bot[stepIndex] = req.query.timestamp;
-            checkLog(stepIndex, steps);
+            checkLog(stepIndex, steps, host);
         }
 
         data.stepsData[stepIndex] = {
@@ -133,7 +133,7 @@ app.get('/api/send-message', (req, res, next) => {
 
         data.activeStep = stepIndex + 1;
 
-        checkLog(data.activeStep, steps);
+        checkLog(data.activeStep, steps, host);
 
         setData(host, data);
 
