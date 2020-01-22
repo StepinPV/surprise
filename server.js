@@ -64,6 +64,7 @@ const decodeHost = (host) => {
 };
 
 const getStepsAndData = (host) => {
+    console.log(host);
     const decodedHost = decodeHost(host);
 
     console.log(decodedHost);
