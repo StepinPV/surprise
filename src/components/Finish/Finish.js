@@ -20,7 +20,7 @@ function Finish({ }) {
         <div className={styles['container']}>
             <div className={styles['photo-container']}>
                 <div className={styles.message}>
-                    Это для тебя солнце!
+                    Открывай дверь!)
                 </div>
                 <img src={image} className={styles.image}/>
                 <div className={styles.timer}>
